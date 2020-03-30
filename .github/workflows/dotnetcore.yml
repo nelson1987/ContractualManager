@@ -1,7 +1,5 @@
 name: .NET Core
 
-solution: "./Desafio.sln"
-
 on:
   push:
     branches: [ master ]
