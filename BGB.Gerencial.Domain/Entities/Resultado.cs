@@ -71,7 +71,7 @@ namespace BGB.Gerencial.Domain.Entities
         {
             if (ResultadoAnterior == null)
                 SaldoInicial = Contrato.Valor;
-            else if (ResultadoAnterior.DiasAtraso >= 60 || Data > DateTime.Today)
+            else if ((ResultadoAnterior.DiasAtraso >= 60 || Data > DateTime.Today) && Contrato.Indice != Enums.IndiceContratoEnum.CDI)
                 SaldoInicial = ResultadoAnterior.SaldoFinal;
             else
                 SaldoInicial = Math.Round(DiasAtraso >= 60 ? CalcularSaldoInicialComAtraso() : CalcularSaldoInicialSemAtraso(), 2);

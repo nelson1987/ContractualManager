@@ -16,6 +16,7 @@ namespace BGB.Gerencial.Domain.Entities
         {
             SetSaldoInicial();
             SetCustoInicial();
+            SetCustoInicialConciliacao();
             SetResultadoConciliacao();
         }
 
@@ -23,6 +24,7 @@ namespace BGB.Gerencial.Domain.Entities
         {
             SetSaldoInicial();
             SetCustoInicial();
+            SetCustoInicialConciliacao();
             SetResultadoConciliacao();
         }
 
