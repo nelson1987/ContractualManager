@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BGB.Gerencial.Domain.Tests", "BGB.Gerencial.Domain.Tests\BGB.Gerencial.Domain.Tests.csproj", "{748DE59E-29BD-42AA-85A7-67987922CA59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BGB.Gerencial.Domain", "BGB.Gerencial.Domain\BGB.Gerencial.Domain.csproj", "{DE940BF5-354F-47C1-B33A-95D405E3C636}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{748DE59E-29BD-42AA-85A7-67987922CA59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748DE59E-29BD-42AA-85A7-67987922CA59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748DE59E-29BD-42AA-85A7-67987922CA59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748DE59E-29BD-42AA-85A7-67987922CA59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE940BF5-354F-47C1-B33A-95D405E3C636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE940BF5-354F-47C1-B33A-95D405E3C636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE940BF5-354F-47C1-B33A-95D405E3C636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE940BF5-354F-47C1-B33A-95D405E3C636}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9548F89E-C336-48B2-803F-E70EF580B6CA}
+	EndGlobalSection
+EndGlobal
