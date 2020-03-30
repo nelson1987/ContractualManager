@@ -1878,8 +1878,8 @@ namespace BGB.Gerencial.Domain.Tests.Services
             _cotacoes.Add(new Cotacao() { Data = DateTime.Parse("2020-12-31"), Fator = 1.37727306, Tipo = "TMC" });
             #endregion
             _movimentos = new List<Movimento>();
-            _movimentos.Add(new Movimento() { Data = DateTime.Parse("16/01/2020"), Valor = -73324.55 });
-            _movimentos.Add(new Movimento() { Data = DateTime.Parse("17/02/2020"), Valor = -73364.08 });
+            _movimentos.Add(new Movimento() { Data = DateTime.Parse("2020-01-16"), Valor = -73324.55 });
+            _movimentos.Add(new Movimento() { Data = DateTime.Parse("2020-02-17"), Valor = -73364.08 });
         }
 
         [TestMethod]
