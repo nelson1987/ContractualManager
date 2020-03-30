@@ -52,12 +52,6 @@ Mkfile.old
 dkms.conf
 
 .vs/
-/bin/
-
-BGB.Gerencial.Domain/bin/
-
-BGB.Gerencial.Domain.Tests/obj/Debug/
-
-BGB.Gerencial.Domain.Tests/bin/
-
-BGB.Gerencial.Domain/obj/Debug/
+bin/
+debug/
+release/
