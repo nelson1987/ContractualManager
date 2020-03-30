@@ -19,5 +19,7 @@ jobs:
         dotnet-version: 3.1.101
     - name: Install dependencies
       run: dotnet restore
+    - name: Build
+      run: dotnet build
     - name: Test
       run: dotnet test --no-restore --verbosity normal ./BGB.Gerencial.Domain.Tests/BGB.Gerencial.Domain.Tests.csproj
