@@ -15,16 +15,8 @@ namespace BGB.Gerencial.Application.Services
             var resultados = new List<Resultado>();
             foreach (DateTime dataAtual in contrato.DatasPorLinha)
             {
-                var cotacaoCdiDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == dataAtual);
-                if (cotacaoCdiDiaria == null)
-                    cotacaoCdiDiaria = cotacoes.LastOrDefault(x => x.Tipo == "CDI");
-
-                var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual);
-                if (cotacaoTmcDiaria == null)
-                    cotacaoTmcDiaria = cotacoes.LastOrDefault(x => x.Tipo == "TMC" && x.Data >= dataAtual);
-
-                if (cotacaoTmcDiaria == null || cotacaoCdiDiaria == null)
-                    throw new Exception($"Falta cotações do dia {dataAtual.ToString("dd/MM/yyyy")}.");
+                Cotacao cotacaoCdiDiaria = BuscarCotacaoCdi(cotacoes, dataAtual);
+                Cotacao cotacaoTmcDiaria = BuscarCotacaoTmc(cotacoes, dataAtual);
 
                 //Linha Inicial
                 if (resultados.Count == 0)
@@ -46,7 +38,7 @@ namespace BGB.Gerencial.Application.Services
             }
 
             SetPrimeiraLinha(contrato, resultados);
-                
+
             return resultados.Select(x => new ResultadoDTO()
             {
                 Data = x.Data,
@@ -63,6 +55,30 @@ namespace BGB.Gerencial.Application.Services
                 CustoFinalConciliacao = x.CustoFinalConciliacao,
                 ResultadoConciliacao = x.ResultadoConciliacao
             }).ToList();
+        }
+
+        private Cotacao BuscarCotacaoTmc(List<Cotacao> cotacoes, DateTime dataAtual)
+        {
+            var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual);
+            if (cotacaoTmcDiaria == null)
+                cotacaoTmcDiaria = cotacoes.LastOrDefault(x => x.Tipo == "TMC" && x.Data >= dataAtual);
+
+            if (cotacaoTmcDiaria == null)
+                throw new Exception($"Falta cotação de TMC do dia {dataAtual.ToString("dd/MM/yyyy")}.");
+
+            return cotacaoTmcDiaria;
+        }
+
+        private Cotacao BuscarCotacaoCdi(List<Cotacao> cotacoes, DateTime dataAtual)
+        {
+            var cotacaoCdiDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == dataAtual);
+            if (cotacaoCdiDiaria == null)
+                cotacaoCdiDiaria = cotacoes.LastOrDefault(x => x.Tipo == "CDI");
+
+            if (cotacaoCdiDiaria == null)
+                throw new Exception($"Falta cotação de CDI do dia {dataAtual.ToString("dd/MM/yyyy")}.");
+
+            return cotacaoCdiDiaria;
         }
 
         private void AdicionarLinhaComMovimento(Contrato contrato, List<Resultado> resultados, DateTime dataAtual, Cotacao cotacaoCdiDiaria, Cotacao cotacaoTmcDiaria, Movimento item)
