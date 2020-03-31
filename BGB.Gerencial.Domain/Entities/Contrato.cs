@@ -1,6 +1,5 @@
 ﻿using BGB.Gerencial.Domain.Enums;
 using BGB.Gerencial.Domain.Extensions;
-using BGB.Gerencial.Domain.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace BGB.Gerencial.Domain.Entities
         public Contrato()
         {
             Movimentos = new List<Movimento>();
-            Resultados = new List<Resultado>();
+            //Resultados = new List<Resultado>();
         }
 
         public double Taxa { get; set; }
@@ -21,12 +20,12 @@ namespace BGB.Gerencial.Domain.Entities
         public DateTime DataFinal { get; set; }
         public double Valor { get; set; }
         public List<Movimento> Movimentos { get; set; }
-        public List<Resultado> Resultados { get; set; }
+        //public List<Resultado> Resultados { get; set; }
 
         public void Calcular(List<Cotacao> cotacoes)
         {
-            CalculadoraContrato calculadora = new CalculadoraContrato(cotacoes);
-            Resultados = calculadora.Calcular(DatasPorLinha, this);
+            //CalculadoraContrato calculadora = new CalculadoraContrato(cotacoes);
+            //Resultados = calculadora.Calcular(DatasPorLinha, this);
         }
 
         public List<DateTime> DatasPorLinha

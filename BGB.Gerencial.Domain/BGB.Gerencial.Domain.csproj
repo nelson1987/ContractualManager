@@ -5,10 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Entities\Calculadora.cs" />
     <Compile Remove="Entities\CalculadoraCustoInicial.cs" />
     <Compile Remove="Entities\CalculadoraSaldoFinal.cs" />
     <Compile Remove="Entities\CalculadoraSaldoInicial.cs" />
+    <Compile Remove="Entities\Resultado.cs" />
+    <Compile Remove="Entities\ResultadoCdi.cs" />
+    <Compile Remove="Entities\ResultadoPre.cs" />
   </ItemGroup>
 
 </Project>

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\ResultadoTests.cs" />
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
 
