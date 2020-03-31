@@ -17,45 +17,36 @@ namespace BGB.Gerencial.Application.Services
             {
                 var cotacaoCdiDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == dataAtual);
                 if (cotacaoCdiDiaria == null)
-                    cotacaoCdiDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == new DateTime(2020, 03, 12));
+                    cotacaoCdiDiaria = cotacoes.LastOrDefault(x => x.Tipo == "CDI");
 
-                var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual && x.Data <= new DateTime(2020, 03, 12));
+                var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual);
                 if (cotacaoTmcDiaria == null)
-                    cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == new DateTime(2020, 03, 12));
+                    cotacaoTmcDiaria = cotacoes.LastOrDefault(x => x.Tipo == "TMC" && x.Data >= dataAtual);
+
                 if (cotacaoTmcDiaria == null || cotacaoCdiDiaria == null)
                     throw new Exception($"Falta cotações do dia {dataAtual.ToString("dd/MM/yyyy")}.");
-                //TODO: descomentar .LastOrDefault();
 
                 //Linha Inicial
                 if (resultados.Count == 0)
-                {
-                    resultados.Add(contrato.Indice == IndiceContratoEnum.PRE
-                        ? new ResultadoPre(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria) as Resultado
-                        : new ResultadoCdi(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria) as Resultado);
-                }
+                    AdicionarLinhaInicial(contrato, resultados, dataAtual, cotacaoCdiDiaria, cotacaoTmcDiaria);
+
                 //Linha Sem Movimento
                 if (!contrato.Movimentos.Any(x => x.Data == dataAtual) && !resultados.Any(x => x.Data == dataAtual))
-                {
-                    resultados.Add(contrato.Indice == IndiceContratoEnum.PRE
-                        ? new ResultadoPre(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault()) as Resultado
-                        : new ResultadoCdi(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault()) as Resultado);
-                }
+                    AdicionarLinhaSemMovimento(contrato, resultados, dataAtual, cotacaoCdiDiaria, cotacaoTmcDiaria);
+
                 //Linha Com Movimento
                 if (contrato.Movimentos.Any(x => x.Data == dataAtual))
                 {
                     foreach (Movimento item in contrato.Movimentos.Where(x => x.Data == dataAtual))
                     {
-                        resultados.Add(contrato.Indice == IndiceContratoEnum.PRE
-                            ? new ResultadoPre(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault(), item) as Resultado
-                            : new ResultadoCdi(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault(), item) as Resultado);
+                        AdicionarLinhaComMovimento(contrato, resultados, dataAtual, cotacaoCdiDiaria, cotacaoTmcDiaria, item);
                     }
                 }
+
             }
-            if (contrato.DataInicial.Year < DateTime.Today.Year)
-            {
-                resultados[0].Data = new DateTime(DateTime.Today.Year - 1, 12, 31);
-            }
-            //return resultados;
+
+            SetPrimeiraLinha(contrato, resultados);
+                
             return resultados.Select(x => new ResultadoDTO()
             {
                 Data = x.Data,
@@ -72,6 +63,37 @@ namespace BGB.Gerencial.Application.Services
                 CustoFinalConciliacao = x.CustoFinalConciliacao,
                 ResultadoConciliacao = x.ResultadoConciliacao
             }).ToList();
+        }
+
+        private void AdicionarLinhaComMovimento(Contrato contrato, List<Resultado> resultados, DateTime dataAtual, Cotacao cotacaoCdiDiaria, Cotacao cotacaoTmcDiaria, Movimento item)
+        {
+            resultados.Add(contrato.Indice == IndiceContratoEnum.PRE
+                                        ? new ResultadoPre(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault(), item) as Resultado
+                                        : new ResultadoCdi(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault(), item) as Resultado);
+        }
+
+        private void AdicionarLinhaSemMovimento(Contrato contrato, List<Resultado> resultados, DateTime dataAtual, Cotacao cotacaoCdiDiaria, Cotacao cotacaoTmcDiaria)
+        {
+            resultados.Add(contrato.Indice == IndiceContratoEnum.PRE
+                ? new ResultadoPre(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault()) as Resultado
+                : new ResultadoCdi(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria, resultados.LastOrDefault()) as Resultado);
+        }
+
+        private void AdicionarLinhaInicial(Contrato contrato, List<Resultado> resultados, DateTime dataAtual, Cotacao cotacaoCdiDiaria, Cotacao cotacaoTmcDiaria)
+        {
+            resultados.Add(contrato.Indice == IndiceContratoEnum.PRE
+                ? new ResultadoPre(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria) as Resultado
+                : new ResultadoCdi(dataAtual, contrato, cotacaoCdiDiaria, cotacaoTmcDiaria) as Resultado);
+        }
+
+        private void SetPrimeiraLinha(Contrato contrato, List<Resultado> resultados)
+        {
+            ///Setar Primeira Linha como dia 31 de Dezembro do ano anterior ao atual
+            ///Ex: Data Atual : 31-01-2020 - Primeira linha será o saldo do dia 31-12-2019
+            if (contrato.DataInicial.Year < DateTime.Today.Year)
+            {
+                resultados[0].Data = new DateTime(DateTime.Today.Year - 1, 12, 31);
+            }
         }
     }
 }
