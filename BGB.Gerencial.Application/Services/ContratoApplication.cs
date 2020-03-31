@@ -10,26 +10,22 @@ namespace BGB.Gerencial.Application.Services
 {
     public class ContratoApplication
     {
-
-        public List<Cotacao> Cotacoes { get; set; }
-        public List<Resultado> Calcular(Contrato contrato)
+        public List<ResultadoDTO> Calcular(List<Cotacao> cotacoes, Contrato contrato)
         {
             var resultados = new List<Resultado>();
             foreach (DateTime dataAtual in contrato.DatasPorLinha)
             {
-                //if (dataAtual >= DateTime.Today)
-                //    resultados.Add(resultados.LastOrDefault());
-
-                var cotacaoCdiDiaria = Cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == dataAtual);
+                var cotacaoCdiDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == dataAtual);
                 if (cotacaoCdiDiaria == null)
-                    cotacaoCdiDiaria = Cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == new DateTime(2020, 03, 12));
+                    cotacaoCdiDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == new DateTime(2020, 03, 12));
 
-                var cotacaoTmcDiaria = Cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual && x.Data <= new DateTime(2020, 03, 12));
+                var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual && x.Data <= new DateTime(2020, 03, 12));
                 if (cotacaoTmcDiaria == null)
-                    cotacaoTmcDiaria = Cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == new DateTime(2020, 03, 12));
+                    cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == new DateTime(2020, 03, 12));
                 if (cotacaoTmcDiaria == null || cotacaoCdiDiaria == null)
                     throw new Exception($"Falta cotações do dia {dataAtual.ToString("dd/MM/yyyy")}.");
                 //TODO: descomentar .LastOrDefault();
+
                 //Linha Inicial
                 if (resultados.Count == 0)
                 {
@@ -59,7 +55,23 @@ namespace BGB.Gerencial.Application.Services
             {
                 resultados[0].Data = new DateTime(DateTime.Today.Year - 1, 12, 31);
             }
-            return resultados;
+            //return resultados;
+            return resultados.Select(x => new ResultadoDTO()
+            {
+                Data = x.Data,
+                DiasAtraso = x.DiasAtraso,
+                ValorMovimento = x.Movimento != null ? x.Movimento.Valor : 0.00,
+                ValorCdi = x.CotacaoCdi != null ? x.CotacaoCdi.Fator : 0.00,
+                ValorTmc = x.CotacaoTmc != null ? x.CotacaoTmc.Fator : 0.00,
+                SaldoInicial = x.SaldoInicial,
+                SaldoFinal = x.SaldoFinal,
+                CustoInicial = x.CustoInicial,
+                CustoFinal = x.CustoFinal,
+                ResultadoGerencial = x.ResultadoGerencial,
+                CustoInicialConciliacao = x.CustoInicialConciliacao,
+                CustoFinalConciliacao = x.CustoFinalConciliacao,
+                ResultadoConciliacao = x.ResultadoConciliacao
+            }).ToList();
         }
     }
 }

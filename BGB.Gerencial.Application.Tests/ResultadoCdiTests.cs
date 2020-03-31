@@ -1,3 +1,4 @@
+using BGB.Gerencial.Application.Services;
 using BGB.Gerencial.Domain.Entities;
 using BGB.Gerencial.Domain.Enums;
 using BGB.Gerencial.Domain.ValueObjects;
@@ -1894,6 +1895,9 @@ namespace BGB.Gerencial.Application.Tests
             contrato.Valor = 2042610.95;
             //ASSERT
             contrato.Movimentos.AddRange(_movimentos);
+
+            ContratoApplication contratoApplication = new ContratoApplication();
+            contratoApplication.Calcular(_cotacoes, contrato);
             //contrato.Calcular(_cotacoes);
             #region Asserts
 

@@ -1,3 +1,4 @@
+using BGB.Gerencial.Application.Services;
 using BGB.Gerencial.Domain.Entities;
 using BGB.Gerencial.Domain.Enums;
 using BGB.Gerencial.Domain.ValueObjects;
@@ -1893,8 +1894,10 @@ namespace BGB.Gerencial.Application.Tests
             contrato.DataFinal = DateTime.Parse("2020-08-10");
             contrato.Valor = 1732641.63;
             //ASSERT
-            //contrato.Movimentos.AddRange(_movimentos);
-            //contrato.Calcular(_cotacoes);
+            contrato.Movimentos.AddRange(_movimentos);
+            ContratoApplication contratoApplication = new ContratoApplication();
+            contratoApplication.Calcular(_cotacoes, contrato);
+
             #region Asserts
             //Assert.AreEqual(contrato.Resultados[0].Data.ToString("yyyy-MM-dd"), "2020-02-12");
             //Assert.AreEqual(contrato.Resultados[1].Data.ToString("yyyy-MM-dd"), "2020-02-29");

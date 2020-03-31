@@ -12,7 +12,7 @@ namespace BGB.Gerencial.Domain.Entities
         public Contrato()
         {
             Movimentos = new List<Movimento>();
-            //Resultados = new List<Resultado>();
+            Resultados = new List<Resultado>();
         }
 
         public double Taxa { get; set; }
@@ -21,7 +21,7 @@ namespace BGB.Gerencial.Domain.Entities
         public DateTime DataFinal { get; set; }
         public double Valor { get; set; }
         public List<Movimento> Movimentos { get; set; }
-        //public List<Resultado> Resultados { get; set; }
+        public List<Resultado> Resultados { get; set; }
 
         //public void Calcular(List<Cotacao> cotacoes)
         //{
@@ -42,9 +42,6 @@ namespace BGB.Gerencial.Domain.Entities
 
                     if (diaAtual == diaAtual.LastDayInMonth())
                         datas.Add(diaAtual);
-
-                    //if (diaAtual == diaAtual.LastDayInYear())
-                    //    resultados.Add(new Resultado() { Data = diaAtual });
 
                     if (Movimentos.Any(x => x.Data == diaAtual))
                         datas.Add(diaAtual);
