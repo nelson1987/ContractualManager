@@ -15,6 +15,8 @@
     <Compile Remove="Entities\CalculadoraCustoInicial.cs" />
     <Compile Remove="Entities\CalculadoraSaldoFinal.cs" />
     <Compile Remove="Entities\CalculadoraSaldoInicial.cs" />
+    <Compile Remove="Entities\Cotacao.cs" />
+    <Compile Remove="Entities\Movimento.cs" />
     <Compile Remove="Entities\Resultado.cs" />
     <Compile Remove="Entities\ResultadoCdi.cs" />
     <Compile Remove="Entities\ResultadoPre.cs" />

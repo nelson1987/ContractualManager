@@ -1,6 +1,7 @@
 ﻿using BGB.Gerencial.Application.Models;
 using BGB.Gerencial.Domain.Entities;
 using BGB.Gerencial.Domain.Enums;
+using BGB.Gerencial.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace BGB.Gerencial.Application.Services
     {
 
         public List<Cotacao> Cotacoes { get; set; }
-        public List<Resultado> Calcular(List<DateTime> datasPorLinha, Contrato contrato)
+        public List<Resultado> Calcular(Contrato contrato)
         {
             var resultados = new List<Resultado>();
-            foreach (DateTime dataAtual in datasPorLinha)
+            foreach (DateTime dataAtual in contrato.DatasPorLinha)
             {
                 //if (dataAtual >= DateTime.Today)
                 //    resultados.Add(resultados.LastOrDefault());

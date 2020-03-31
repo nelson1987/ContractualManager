@@ -1,5 +1,6 @@
 ﻿using BGB.Gerencial.Domain.Enums;
 using BGB.Gerencial.Domain.Extensions;
+using BGB.Gerencial.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,11 @@ namespace BGB.Gerencial.Domain.Entities
         public List<Movimento> Movimentos { get; set; }
         //public List<Resultado> Resultados { get; set; }
 
-        public void Calcular(List<Cotacao> cotacoes)
-        {
-            //CalculadoraContrato calculadora = new CalculadoraContrato(cotacoes);
-            //Resultados = calculadora.Calcular(DatasPorLinha, this);
-        }
+        //public void Calcular(List<Cotacao> cotacoes)
+        //{
+        //    //CalculadoraContrato calculadora = new CalculadoraContrato(cotacoes);
+        //    //Resultados = calculadora.Calcular(DatasPorLinha, this);
+        //}
 
         public List<DateTime> DatasPorLinha
         {

@@ -1,5 +1,6 @@
 ﻿using BGB.Gerencial.Domain.Entities;
 using BGB.Gerencial.Domain.Enums;
+using BGB.Gerencial.Domain.ValueObjects;
 using System;
 
 namespace BGB.Gerencial.Application.Models
