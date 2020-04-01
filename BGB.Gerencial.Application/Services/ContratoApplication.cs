@@ -57,11 +57,12 @@ namespace BGB.Gerencial.Application.Services
             }).ToList();
         }
 
+        #region Private Methods
         private Cotacao BuscarCotacaoTmc(List<Cotacao> cotacoes, DateTime dataAtual)
         {
             var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual);
             if (cotacaoTmcDiaria == null)
-                cotacaoTmcDiaria = cotacoes.LastOrDefault(x => x.Tipo == "TMC" && x.Data >= dataAtual);
+                cotacaoTmcDiaria = cotacoes.LastOrDefault(x => x.Tipo == "TMC" && x.Data <= dataAtual);
 
             if (cotacaoTmcDiaria == null)
                 throw new Exception($"Falta cotação de TMC do dia {dataAtual.ToString("dd/MM/yyyy")}.");
@@ -110,6 +111,7 @@ namespace BGB.Gerencial.Application.Services
             {
                 resultados[0].Data = new DateTime(DateTime.Today.Year - 1, 12, 31);
             }
-        }
+        } 
+        #endregion
     }
 }

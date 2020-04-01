@@ -15,6 +15,7 @@ namespace BGB.Gerencial.Domain.Entities
             Resultados = new List<Resultado>();
         }
 
+        public string TaxaContratual { get { return $"{Taxa * 100}%"; } }
         public double Taxa { get; set; }
         public IndiceContratoEnum Indice { get; set; }
         public DateTime DataInicial { get; set; }
@@ -40,7 +41,7 @@ namespace BGB.Gerencial.Domain.Entities
                     if (datas.Count == 0)
                         datas.Add(diaAtual);
 
-                    if (diaAtual == diaAtual.LastDayInMonth())
+                    if (diaAtual == diaAtual.LastDayInMonth() && diaAtual.Date != DataFinal)
                         datas.Add(diaAtual);
 
                     if (Movimentos.Any(x => x.Data == diaAtual))

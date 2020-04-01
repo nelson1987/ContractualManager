@@ -7,26 +7,14 @@ namespace BGB.Gerencial.Domain.ValueObjects
     {
         public ResultadoCdi(DateTime data, Contrato contrato, Cotacao cotacaoCdi, Cotacao cotacaoTmc) : base(data, contrato, cotacaoCdi, cotacaoTmc)
         {
-            SaldoInicial = Contrato.Valor;
-            CustoInicial = Contrato.Valor * -1;
-            CustoInicialConciliacao = contrato.Valor * -1;
-            ResultadoConciliacao = 0.00;
         }
 
         public ResultadoCdi(DateTime data, Contrato contrato, Cotacao cotacaoCdi, Cotacao cotacaoTmc, Resultado resultado) : base(data, contrato, cotacaoCdi, cotacaoTmc, resultado)
         {
-            SetSaldoInicial();
-            SetCustoInicial();
-            SetCustoInicialConciliacao();
-            SetResultadoConciliacao();
         }
 
         public ResultadoCdi(DateTime data, Contrato contrato, Cotacao cotacaoCdi, Cotacao cotacaoTmc, Resultado resultado, Movimento movimento) : base(data, contrato, cotacaoCdi, cotacaoTmc, resultado, movimento)
         {
-            SetSaldoInicial();
-            SetCustoInicial();
-            SetCustoInicialConciliacao();
-            SetResultadoConciliacao();
         }
 
         public override void SetCustoInicialConciliacao()

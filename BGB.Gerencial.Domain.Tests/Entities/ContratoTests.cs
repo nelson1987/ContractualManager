@@ -18,7 +18,7 @@ namespace BGB.Gerencial.Domain.Tests.Services
         }
 
         [TestMethod]
-        public void ContarDatasPorLinha()
+        public void EscreverTaxaContratual()
         {
             Contrato contrato = new Contrato
             {
@@ -29,8 +29,9 @@ namespace BGB.Gerencial.Domain.Tests.Services
                 Valor = 1000.00
             };
             //ASSERT
-            Assert.AreEqual(contrato.DatasPorLinha.Count, 14);
-            //Assert.AreEqual(contrato.Resultados.Count, 0);
+            Assert.AreEqual(contrato.TaxaContratual, "0,42%");
+            Assert.AreEqual(contrato.Resultados.Count, 0);
+            Assert.AreEqual(contrato.Movimentos.Count, 0);
         }
 
         [TestMethod]
@@ -45,8 +46,8 @@ namespace BGB.Gerencial.Domain.Tests.Services
                 Valor = 1000.00
             };
             //ASSERT
+            Assert.AreEqual(contrato.Resultados.Count, 0);
             Assert.AreEqual(contrato.Movimentos.Count, 0);
-            //Assert.AreEqual(contrato.Resultados.Count, 0);
         }
 
         [TestMethod]
@@ -61,8 +62,8 @@ namespace BGB.Gerencial.Domain.Tests.Services
                 Valor = 1000.00
             };
             //ASSERT
+            Assert.AreEqual(contrato.Resultados.Count, 0);
             Assert.AreEqual(contrato.Movimentos.Count, 0);
-            //Assert.AreEqual(contrato.Resultados.Count, 0);
         }
 
         [TestMethod]

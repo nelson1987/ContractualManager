@@ -12,16 +12,30 @@ namespace BGB.Gerencial.Domain.ValueObjects
             CotacaoCdi = cotacaoCdi;
             CotacaoTmc = cotacaoTmc;
             Contrato = contrato;
+
+            SaldoInicial = Contrato.Valor;
+            CustoInicial = Contrato.Valor * -1;
+            CustoInicialConciliacao = contrato.Valor * -1;
+            ResultadoConciliacao = 0.00;
+
         }
 
         public Resultado(DateTime data, Contrato contrato, Cotacao cotacaoCdi, Cotacao cotacaoTmc, Resultado resultadoAnterior) : this(data, contrato, cotacaoCdi, cotacaoTmc)
         {
             ResultadoAnterior = resultadoAnterior;
+            SetSaldoInicial();
+            SetCustoInicial();
+            SetCustoInicialConciliacao();
+            SetResultadoConciliacao();
         }
 
         public Resultado(DateTime data, Contrato contrato, Cotacao cotacaoCdi, Cotacao cotacaoTmc, Resultado resultadoAnterior, Movimento movimento) : this(data, contrato, cotacaoCdi, cotacaoTmc, resultadoAnterior)
         {
             Movimento = movimento;
+            SetSaldoInicial();
+            SetCustoInicial();
+            SetCustoInicialConciliacao();
+            SetResultadoConciliacao();
         }
 
         public Contrato Contrato { get; set; }
