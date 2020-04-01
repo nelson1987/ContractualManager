@@ -11,6 +11,7 @@ namespace BGB.Gerencial.Domain.Tests.Services
     public class ContratoTests
     {
         private List<Cotacao> _cotacoes { get; set; }
+
         [TestInitialize]
         public void Setup()
         {

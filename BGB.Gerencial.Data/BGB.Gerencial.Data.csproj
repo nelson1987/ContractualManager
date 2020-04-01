@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\Resultado.cs" />
-    <Compile Remove="Models\ResultadoCdi.cs" />
-    <Compile Remove="Models\ResultadoPre.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BGB.Gerencial.Data\BGB.Gerencial.Data.csproj" />
     <ProjectReference Include="..\BGB.Gerencial.Domain\BGB.Gerencial.Domain.csproj" />
   </ItemGroup>
 

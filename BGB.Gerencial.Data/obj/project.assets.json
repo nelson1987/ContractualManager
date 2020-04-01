@@ -208,19 +208,6 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "BGB.Gerencial.Data/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.2",
-        "dependencies": {
-          "BGB.Gerencial.Domain": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/BGB.Gerencial.Data.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BGB.Gerencial.Data.dll": {}
-        }
-      },
       "BGB.Gerencial.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
@@ -702,11 +689,6 @@
         "netstandard.library.nuspec"
       ]
     },
-    "BGB.Gerencial.Data/1.0.0": {
-      "type": "project",
-      "path": "../BGB.Gerencial.Data/BGB.Gerencial.Data.csproj",
-      "msbuildProject": "../BGB.Gerencial.Data/BGB.Gerencial.Data.csproj"
-    },
     "BGB.Gerencial.Domain/1.0.0": {
       "type": "project",
       "path": "../BGB.Gerencial.Domain/BGB.Gerencial.Domain.csproj",
@@ -715,7 +697,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "BGB.Gerencial.Data >= 1.0.0",
       "BGB.Gerencial.Domain >= 1.0.0",
       "Microsoft.NETCore.App >= 2.2.0"
     ]
@@ -727,11 +708,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Application\\BGB.Gerencial.Application.csproj",
-      "projectName": "BGB.Gerencial.Application",
-      "projectPath": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Application\\BGB.Gerencial.Application.csproj",
+      "projectUniqueName": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Data\\BGB.Gerencial.Data.csproj",
+      "projectName": "BGB.Gerencial.Data",
+      "projectPath": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Data\\BGB.Gerencial.Data.csproj",
       "packagesPath": "C:\\Users\\nelso\\.nuget\\packages\\",
-      "outputPath": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Application\\obj\\",
+      "outputPath": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -750,9 +731,6 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Data\\BGB.Gerencial.Data.csproj": {
-              "projectPath": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Data\\BGB.Gerencial.Data.csproj"
-            },
             "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Domain\\BGB.Gerencial.Domain.csproj": {
               "projectPath": "D:\\__Arquitetura\\ContractualManager\\BGB.Gerencial.Domain\\BGB.Gerencial.Domain.csproj"
             }

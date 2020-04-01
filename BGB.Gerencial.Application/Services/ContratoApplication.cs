@@ -1,4 +1,6 @@
-﻿using BGB.Gerencial.Application.Models;
+﻿using BGB.Gerencial.Application.Interfaces;
+using BGB.Gerencial.Application.Models;
+using BGB.Gerencial.Data.Interfaces;
 using BGB.Gerencial.Domain.Entities;
 using BGB.Gerencial.Domain.Enums;
 using BGB.Gerencial.Domain.ValueObjects;
@@ -8,15 +10,22 @@ using System.Linq;
 
 namespace BGB.Gerencial.Application.Services
 {
-    public class ContratoApplication
+    public class ContratoApplication : IContratoApplication
     {
-        public List<ResultadoDTO> Calcular(List<Cotacao> cotacoes, Contrato contrato)
+        private ICotacaoRepository _cotacaoRepository { get; set; }
+        public ContratoApplication(ICotacaoRepository cotacaoRepository)
         {
+            _cotacaoRepository = cotacaoRepository;
+        }
+
+        public List<ResultadoDTO> Calcular(Contrato contrato)
+        {
+            IQueryable<Cotacao> cotacoes = _cotacaoRepository.GetByPeriodo(contrato.DataInicial, contrato.DataFinal);
             var resultados = new List<Resultado>();
             foreach (DateTime dataAtual in contrato.DatasPorLinha)
             {
-                Cotacao cotacaoCdiDiaria = BuscarCotacaoCdi(cotacoes, dataAtual);
-                Cotacao cotacaoTmcDiaria = BuscarCotacaoTmc(cotacoes, dataAtual);
+                Cotacao cotacaoCdiDiaria = BuscarCotacaoDiaria(cotacoes.Where(x => x.Tipo == "CDI"), dataAtual);
+                Cotacao cotacaoTmcDiaria = BuscarCotacaoDiaria(cotacoes.Where(x => x.Tipo == "TMC"), dataAtual);
 
                 //Linha Inicial
                 if (resultados.Count == 0)
@@ -58,28 +67,16 @@ namespace BGB.Gerencial.Application.Services
         }
 
         #region Private Methods
-        private Cotacao BuscarCotacaoTmc(List<Cotacao> cotacoes, DateTime dataAtual)
+        private Cotacao BuscarCotacaoDiaria(IEnumerable<Cotacao> cotacoes, DateTime dataAtual)
         {
-            var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "TMC" && x.Data == dataAtual);
+            var cotacaoTmcDiaria = cotacoes.FirstOrDefault(x => x.Data == dataAtual);
             if (cotacaoTmcDiaria == null)
-                cotacaoTmcDiaria = cotacoes.LastOrDefault(x => x.Tipo == "TMC" && x.Data <= dataAtual);
+                cotacaoTmcDiaria = cotacoes.LastOrDefault(x => x.Data <= dataAtual);
 
             if (cotacaoTmcDiaria == null)
-                throw new Exception($"Falta cotação de TMC do dia {dataAtual.ToString("dd/MM/yyyy")}.");
+                throw new Exception($"Falta cotação do dia {dataAtual.ToString("dd/MM/yyyy")}.");
 
             return cotacaoTmcDiaria;
-        }
-
-        private Cotacao BuscarCotacaoCdi(List<Cotacao> cotacoes, DateTime dataAtual)
-        {
-            var cotacaoCdiDiaria = cotacoes.FirstOrDefault(x => x.Tipo == "CDI" && x.Data == dataAtual);
-            if (cotacaoCdiDiaria == null)
-                cotacaoCdiDiaria = cotacoes.LastOrDefault(x => x.Tipo == "CDI");
-
-            if (cotacaoCdiDiaria == null)
-                throw new Exception($"Falta cotação de CDI do dia {dataAtual.ToString("dd/MM/yyyy")}.");
-
-            return cotacaoCdiDiaria;
         }
 
         private void AdicionarLinhaComMovimento(Contrato contrato, List<Resultado> resultados, DateTime dataAtual, Cotacao cotacaoCdiDiaria, Cotacao cotacaoTmcDiaria, Movimento item)
@@ -111,7 +108,7 @@ namespace BGB.Gerencial.Application.Services
             {
                 resultados[0].Data = new DateTime(DateTime.Today.Year - 1, 12, 31);
             }
-        } 
+        }
         #endregion
     }
 }

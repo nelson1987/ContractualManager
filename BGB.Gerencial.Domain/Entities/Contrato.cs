@@ -48,7 +48,10 @@ namespace BGB.Gerencial.Domain.Entities
                         datas.Add(diaAtual);
 
                     if (diaAtual.Date == DataFinal)
+                    {
                         datas.Add(diaAtual);
+                        //TODO:última data ser o último dia do mês -- datas.Add(diaAtual.LastDayInMonth());
+                    }
                 }
 
                 if (DataInicial.Year < DateTime.Today.Year)
