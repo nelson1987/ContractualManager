@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace BGB.Gerencial.Domain.Tests.Services
+namespace BGB.Gerencial.Domain.Tests.Entities
 {
     [TestClass]
     public class ContratoTests
@@ -21,31 +21,27 @@ namespace BGB.Gerencial.Domain.Tests.Services
         [TestMethod]
         public void EscreverTaxaContratual()
         {
-            Contrato contrato = new Contrato
-            {
-                Taxa = 0.0042,
-                Indice = IndiceContratoEnum.PRE,
-                DataInicial = DateTime.Parse("2020-01-01"),
-                DataFinal = DateTime.Parse("2021-01-01"),
-                Valor = 1000.00
-            };
+            var Taxa = 0.0042;
+            var Indice = IndiceContratoEnum.PRE;
+            var DataInicial = DateTime.Parse("2020-01-01");
+            var DataFinal = DateTime.Parse("2021-01-01");
+            var Valor = 1000.00;
+
+            Contrato contrato = new Contrato(Valor, Taxa, Indice, DataInicial, DataFinal);
             //ASSERT
             Assert.AreEqual(contrato.TaxaContratual, "0.42%");
-            Assert.AreEqual(contrato.Resultados.Count, 0);
-            Assert.AreEqual(contrato.Movimentos.Count, 0);
         }
 
         [TestMethod]
         public void CriarContratoPre()
         {
-            Contrato contrato = new Contrato
-            {
-                Taxa = 0.0042,
-                Indice = IndiceContratoEnum.PRE,
-                DataInicial = DateTime.Parse("2020-01-01"),
-                DataFinal = DateTime.Parse("2021-01-01"),
-                Valor = 1000.00
-            };
+            var Taxa = 0.0042;
+            var Indice = IndiceContratoEnum.PRE;
+            var DataInicial = DateTime.Parse("2020-01-01");
+            var DataFinal = DateTime.Parse("2021-01-01");
+            var Valor = 1000.00;
+
+            Contrato contrato = new Contrato(Valor, Taxa, Indice, DataInicial, DataFinal);
             //ASSERT
             Assert.AreEqual(contrato.Resultados.Count, 0);
             Assert.AreEqual(contrato.Movimentos.Count, 0);
@@ -54,31 +50,29 @@ namespace BGB.Gerencial.Domain.Tests.Services
         [TestMethod]
         public void CriarContratoCdi()
         {
-            Contrato contrato = new Contrato
-            {
-                Taxa = 0.0042,
-                Indice = IndiceContratoEnum.CDI,
-                DataInicial = DateTime.Parse("2020-01-01"),
-                DataFinal = DateTime.Parse("2021-01-01"),
-                Valor = 1000.00
-            };
+            var Taxa = 0.0042;
+            var Indice = IndiceContratoEnum.CDI;
+            var DataInicial = DateTime.Parse("2020-01-01");
+            var DataFinal = DateTime.Parse("2021-01-01");
+            var Valor = 1000.00;
+
+            Contrato contrato = new Contrato(Valor, Taxa, Indice, DataInicial, DataFinal);
             //ASSERT
             Assert.AreEqual(contrato.Resultados.Count, 0);
             Assert.AreEqual(contrato.Movimentos.Count, 0);
         }
 
         [TestMethod]
-        //ExpectedException(typeof(Exception), "Faltam fatores nesse cálculo.")]
+        //[ExpectedException(typeof(Exception), "Faltam fatores nesse cálculo.")]
         public void GerarResultadosDeContratoCdi()
         {
-            Contrato contrato = new Contrato
-            {
-                Taxa = 0.0042,
-                Indice = IndiceContratoEnum.CDI,
-                DataInicial = DateTime.Parse("2020-01-01"),
-                DataFinal = DateTime.Parse("2021-01-01"),
-                Valor = 1000.00
-            };
+            var Taxa = 0.0042;
+            var Indice = IndiceContratoEnum.CDI;
+            var DataInicial = DateTime.Parse("2020-01-01");
+            var DataFinal = DateTime.Parse("2021-01-01");
+            var Valor = 1000.00;
+
+            Contrato contrato = new Contrato(Valor, Taxa, Indice, DataInicial, DataFinal);
             //ASSERT
             //contrato.Calcular(_cotacoes);
             //Assert.AreEqual(contrato.Resultados.Count, 14);
@@ -88,14 +82,13 @@ namespace BGB.Gerencial.Domain.Tests.Services
         //[ExpectedException(typeof(Exception), "Falta cotações do dia 01/01/2020")]
         public void CriarResultadosDeContratoPre()
         {
-            Contrato contrato = new Contrato
-            {
-                Taxa = 0.0042,
-                Indice = IndiceContratoEnum.PRE,
-                DataInicial = DateTime.Parse("2020-01-01"),
-                DataFinal = DateTime.Parse("2021-01-01"),
-                Valor = 1000.00
-            };
+            var Taxa = 0.0042;
+            var Indice = IndiceContratoEnum.PRE;
+            var DataInicial = DateTime.Parse("2020-01-01");
+            var DataFinal = DateTime.Parse("2021-01-01");
+            var Valor = 1000.00;
+
+            Contrato contrato = new Contrato(Valor, Taxa, Indice, DataInicial, DataFinal);
             //ASSERT
             //contrato.Calcular(_cotacoes);
             //Assert.AreEqual(contrato.Resultados.Count, 14);
@@ -105,16 +98,15 @@ namespace BGB.Gerencial.Domain.Tests.Services
         //[ExpectedException(typeof(Exception), "Faltam fatores nesse cálculo.")]
         public void CriarResultadosDeContratoCdiComMovimentacao()
         {
-            Contrato contrato = new Contrato
-            {
-                Taxa = 0.0042,
-                Indice = IndiceContratoEnum.CDI,
-                DataInicial = DateTime.Parse("2020-01-01"),
-                DataFinal = DateTime.Parse("2021-01-01"),
-                Valor = 1000.00
-            };
+            var Taxa = 0.0042;
+            var Indice = IndiceContratoEnum.CDI;
+            var DataInicial = DateTime.Parse("2020-01-01");
+            var DataFinal = DateTime.Parse("2021-01-01");
+            var Valor = 1000.00;
+
+            Contrato contrato = new Contrato(Valor, Taxa, Indice, DataInicial, DataFinal);
             //ASSERT
-            contrato.Movimentos.Add(new Movimento() { });
+            contrato.Adicionar(new Movimento() { });
             //contrato.Calcular(_cotacoes);
             //Assert.AreEqual(contrato.Resultados.Count, 14);
         }
@@ -123,16 +115,15 @@ namespace BGB.Gerencial.Domain.Tests.Services
         //[ExpectedException(typeof(Exception), "Falta cotações do dia 01/01/2020")]
         public void CriarResultadosDeContratoPreComMovimentacao()
         {
-            Contrato contrato = new Contrato
-            {
-                Taxa = 0.0042,
-                Indice = IndiceContratoEnum.PRE,
-                DataInicial = DateTime.Parse("2020-01-01"),
-                DataFinal = DateTime.Parse("2021-01-01"),
-                Valor = 1000.00
-            };
+            var Taxa = 0.0042;
+            var Indice = IndiceContratoEnum.PRE;
+            var DataInicial = DateTime.Parse("2020-01-01");
+            var DataFinal = DateTime.Parse("2021-01-01");
+            var Valor = 1000.00;
+
+            Contrato contrato = new Contrato(Valor, Taxa, Indice, DataInicial, DataFinal);
             //ASSERT
-            contrato.Movimentos.Add(new Movimento() { });
+            contrato.Adicionar(new Movimento() { });
             //contrato.Calcular(_cotacoes);
             //Assert.AreEqual(contrato.Resultados.Count, 14);
         }

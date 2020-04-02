@@ -14,8 +14,19 @@ using System.Linq;
 namespace BGB.Gerencial.Application.Tests
 {
     [TestClass]
-    public class ResultadoCdiTests
+    public class DefaultTests
     {
+        [AssemblyInitialize]
+        public static void AssemblyInit(TestContext context)
+        {
+            _cotacoes = new List<Cotacao>();
+            _movimentos = new List<Movimento>();
+            _movimentos.Add(new Movimento() { Data = DateTime.Parse("2020-01-16"), Valor = -73324.55 });
+            _movimentos.Add(new Movimento() { Data = DateTime.Parse("2020-02-17"), Valor = -73364.08 });
+            _mockRepository = new Mock<ICotacaoRepository>();
+            _contratoApplication = new ContratoApplication(_mockRepository.Object);
+
+        }
         private List<Cotacao> _cotacoes { get; set; }
         private List<Movimento> _movimentos { get; set; }
         private List<ResultadoDTO> _resultados { get; set; }

@@ -8,12 +8,14 @@
 
   <ItemGroup>
     <Compile Remove="Services\**" />
+    <Compile Remove="ValueObjects\**" />
     <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="ValueObjects\**" />
     <None Remove="Services\**" />
+    <None Remove="ValueObjects\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\ResultadoTests.cs" />
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
 
